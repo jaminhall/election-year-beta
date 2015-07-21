@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Election Year MMO</title>
+        <link rel="stylesheet" href="/css/main.css"/>
+    </head>
+    
+    <body>
+        <div id="welcome" class="screen">
+            <h1>Election Year</h1>
+            <p id="playerNameError" class="error"></p>
+            <form id="addPlayer">
+                <p>
+                <label>Please enter a player name:</label></p><p>
+                <input id="playerNameInput" type="text"/></p>
+                <p><input type="submit"/></p>
+            </form>
+        </div>
+        
+        
+        <div id="lobby" class="screen">
+            <h1>Welcome to the lobby, <span class="playerName"></span></h1>
+            <p>Create or join a game</p>
+            <div>
+            <h2>Open Games</h2>
+            <input id="createGame" type="button" value="Create"></input>
+            <ul id="availableGames"></ul>
+            </div>
+            <div>
+            <h2>Players Online</h2>
+            <ul id="playersOnline"></ul>
+            </div>
+        </div>
+        
+        <div id="game" class="screen">
+            <h1><span class="hostName"></span>'s Game</h1>
+            <input id="startGame" type="button" value="Start"></input>
+            <h2>Players</h2>
+            <ul id="players"></ul>
+        </div>
+        
+    </body>
+    
+    <script src="/js/jquery.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/main.js"></script>
+    
+</html>
