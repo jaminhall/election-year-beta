@@ -3,11 +3,12 @@ var express = require("express"),
     server = require("http").createServer(app),
     io = require("socket.io").listen(server),
     players = {},
-    games = {};
+    games = {},
+    port = process.env.PORT || 5000;
 
 app.use(express.static('public'));
 
-server.listen(3000);
+server.listen(port);
 
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/index.html");
