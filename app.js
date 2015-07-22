@@ -64,7 +64,7 @@ io.sockets.on('connection', function (socket) {
                         cancelGame(data);
                         delete games[data];
                     }
-                }
+                });
 
                 socket.on("disconnect", function (data) {
                     if (!socket.player) return;
