@@ -7,11 +7,13 @@ var socket,
     playersOnline,
     createGameButton,
     startGameButton,
+    cancelGameButton,
     welcomeScreen,
     game,
     gameScreen,
     availableGames,
-    lobbyScreen;
+    lobbyScreen,
+    notification;
 
 jQuery(function ($) {
     init();
@@ -24,7 +26,7 @@ jQuery(function ($) {
 function init() {
     socket = io.connect();
     player = {};
-    game = {
+    gameView = {
         playerList: $('#players'),
         hostName: $('.hostName')
     };
@@ -36,21 +38,27 @@ function init() {
     createGameButton = $('#createGame');
     startGameButton = $('#startGame');
     availableGames = $('#availableGames');
+    cancelGameButton = $('#cancelGame');
     //SCREENS
     welcomeScreen = $('#welcome');
     lobbyScreen = $('#lobby');
     gameScreen = $('#game');
+    
+    notification = $('#notification');
 }
 
 function addSocketHandlers() {
     socket.on('players', function (data) {
         updateAvailablePlayers(data);
     });
-    socket.on('games', function(data) {
+    socket.on('games', function (data) {
         updateAvailableGames(data);
     });
-    socket.on('playerAddedToGame', function(data) {
-        updateGamePlayers(data);
+    socket.on('playerAddedToGame', function (game) {
+        updateGame(game);
+    });
+    socket.on('cancelGame', function () {
+        cancelGame();
     });
 }
 
@@ -64,32 +72,49 @@ function addFormHandlers() {
                 displayScreen(lobbyScreen);
                 playerNameInput.val("");
             } else {
-                playerNameError.text("Uh oh. Some one is already using that name.");   
+                playerNameError.text("Uh oh. Some one is already using that name.");
             }
         });
     });
-    
-    createGameButton.click(function(event){
-        socket.emit('new game', player.name, function(data){
-           
+
+    createGameButton.click(function (event) {
+        socket.emit('new game', player.name, function (data) {
+            if (data) {
+                displayScreen(gameScreen);
+                startGameButton.show();
+            }
         });
-        displayScreen(gameScreen);
+
+    });
+
+    startGameButton.click(function (event) {
+        socket.emit('start game', player.name,
+            function (data) {
+
+            });
     });
     
-    availableGames.on("click", "input", function(event) {
+    cancelGameButton.click(function (event) {
+        socket.emit('cancel game', player.name, function (data) {
+            
+        });
+    });
+    
+
+    availableGames.on("click", "input", function (event) {
         var gameName = $(event.currentTarget).attr("data-playerName");
-        socket.emit('join game', gameName, function(success) {
-            if(success) {
+        socket.emit('join game', gameName, function (success) {
+            if (success) {
                 displayScreen(gameScreen);
             }
         });
     });
 }
 
-function updateAvailablePlayers(players){
+function updateAvailablePlayers(players) {
     var playerItem;
     playersOnline.html("");
-    for (var i = 0; i < players.length; i++){
+    for (var i = 0; i < players.length; i++) {
         playerItem = "<li>" + players[i] + ((players[i] == player.name) ? " (you)" : "") + "</li>";
         playersOnline.append(playerItem);
     }
@@ -98,22 +123,28 @@ function updateAvailablePlayers(players){
 function updateAvailableGames(games) {
     var gameItem;
     availableGames.html("");
-    for (var i = 0; i < games.length; i++){
+    for (var i = 0; i < games.length; i++) {
         gameItem = "<li>" + games[i] + "'s game <input type='button' value='Join' data-playerName='" + games[i] + "'></input></li>";
         availableGames.append(gameItem);
     }
 }
 
-function updateGamePlayers(players) {
+function updateGame(game) {
+    console.log(game);
     var playerItem;
-    game.playerList.html("");
-    for (var i = 0; i < players.length; i++){
-        playerItem = "<li>" + players[i] + ((players[i] == player.name) ? " (you)" : "") + "</li>";
-        game.playerList.append(playerItem);
+    gameView.playerList.html("");
+    for (var i = 0; i < game.players.length; i++) {
+        playerItem = "<li>" + game.players[i] + ((game.players[i] == player.name) ? " (you)" : "") + "</li>";
+        gameView.playerList.append(playerItem);
     }
-    game.hostName.html(players[0]);
+    gameView.hostName.html(game.players[0]);
 }
 
+function cancelGame() {
+    displayScreen(lobbyScreen);
+    notification.html(":( Your game was cancelled.");
+    notification.fadeIn();
+}
 
 function displayScreen(screen) {
     $('.screen').hide();
