@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module("GameApp", ["game-directives", "lobby-directives"]).controller(
+    var app = angular.module("GameApp", ["game-directives", "lobby-directives", "chat-directives"]).controller(
         "AppController",
         function ($scope, socket) {
             $scope.players = [];

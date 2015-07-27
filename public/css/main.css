@@ -30,6 +30,55 @@ p {
     text-transform: uppercase;
 }
 
+#mainWrapper {
+    position: absolute;
+    left: 20px;
+    top: 60px;
+    right: 240px;
+}
+
+#chat {
+    position: absolute;
+    right: 20px;
+    width: 200px;
+    border: 1px solid #CCC;
+    border-radius: 4px;
+    background: #FFF;
+    bottom: 20px;
+    top: 60px;
+}
+
+#chat h2 {
+    padding: 10px;
+    /*background: #444;
+    color: #FFF;*/
+    
+    border-radius: 4px 4px 0 0;
+    /*box-shadow: 0px 2px 3px rgba(0,0,0,0.16);*/
+}
+
+#chat em {
+    color: #385C75;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+#chat div#received-messages {
+    position: absolute;
+    top: 50px;
+    left: 10px;
+    right: 10px;
+    bottom: 150px;
+    overflow-y: auto;
+}
+
+#chat div#send-message {
+    position: absolute;
+    bottom: 0px;
+    left: 10px;
+    right: 10px;
+}
+
 h1 {
     font-size: 24px;
     color: #385C75;
@@ -78,7 +127,8 @@ ul.cards li:hover {
     -webkit-transition: background .2s;
 }
 
-input {
+input,
+textarea {
     font-family: lato, Arial;
     padding: 5px 10px;
     margin-bottom: 10px;

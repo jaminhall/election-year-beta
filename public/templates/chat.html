@@ -1,0 +1,10 @@
+<div id="chat">
+    <h2>Chat</h2>
+    <div id="received-messages">
+        <p ng-repeat="message in messages"><em>{{message.sender}}</em> {{message.body}}</p>
+    </div>
+    <div id="send-message">
+        <textarea ng-model="newmessage"></textarea>
+        <button class="brand" ng-click="sendMessage()">Send</button>
+    </div>
+</div>

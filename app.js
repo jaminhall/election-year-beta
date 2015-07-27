@@ -114,7 +114,11 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-
+    socket.on('message:send', function (data) {
+        console.log(data.sender);
+        console.log(data.body);
+        io.sockets.emit('message:received', data);
+    });
 
 
     function cancelGame(data) {

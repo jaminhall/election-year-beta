@@ -9,6 +9,7 @@
     <script src="/js/main.js"></script>
     <script src="/js/lobby-directives.js"></script>
     <script src="/js/game-directives.js"></script>
+    <script src="/js/chat-directives.js"></script>
     <script src="http://use.edgefonts.net/lato:n9,i4,n1,i7,i9,n7,i1,i3,n4,n3:all.js"></script>
 
 
@@ -17,12 +18,18 @@
 </head>
 
 <body ng-app="GameApp">
+
     <div id="title">Election Year Beta</div>
     <div ng-controller="AppController">
-        <welcome ng-hide="currentPlayer.loggedIn" current-player="currentPlayer"></welcome>
-        <lobby ng-show="currentPlayer.loggedIn && !currentPlayer.inGame" current-player="currentPlayer" players="players"></lobby>
-        <game ng-show="currentPlayer.inGame" current-player="currentPlayer"></game>
+        <div id="mainWrapper">
+            <welcome ng-hide="currentPlayer.loggedIn" current-player="currentPlayer"></welcome>
+            <lobby ng-show="currentPlayer.loggedIn && !currentPlayer.inGame" current-player="currentPlayer" players="players"></lobby>
+            <game ng-show="currentPlayer.inGame" current-player="currentPlayer"></game>
+        </div>
+        <chat current-player="currentPlayer" ng-show="currentPlayer.loggedIn"></chat>
     </div>
+
+
 </body>
 
 </html>
