@@ -1,14 +1,133 @@
 body {
-    font-family: Arial;
+    font-family: lato, arial;
     font-size: 16px;
-    padding: 50px;
-    background: #5F5F5F;
+    padding: 40px;
+    background: #F5F5F5;
+    color: #2f2f2f;
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+    margin-bottom: 20px;
+    color: #385C75;
+}
+
+#title {
+    background: #444;
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, .16);
+    color: #999;
+    margin: -40px -40px 20px;
+    padding: 10px;
+    text-align: center;
+    font-family: lato, Arial;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 24px;
+    color: #385C75;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #CCC;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+    color: #385C75;
+    border-bottom: 1px solid #CCC;
+}
+
+p {
+    color: #333;
+}
+
+ul li {
+    list-style: none;
+    margin: 10px;
+}
+
+ul {
+    padding: 0;
+}
+
+ul.cards li {
+    width: 100px;
+    height: 125px;
+    padding: 20px;
+    background: #FFF;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 20px 0 0;
+    border: 1px solid #CCC;
+    text-align: center;
+    -webkit-transition: background .2s;
+    cursor: pointer;
+    box-sizing: content-box;
+}
+
+ul.cards li:hover {
+    background: #fff7c9;
+    -webkit-transition: background .2s;
+}
+
+input {
+    font-family: lato, Arial;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #CCC;
+}
+
+li button {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+button {
+    font-family: lato, Arial;
+    display: block;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .16);
+    margin-bottom: 20px;
+}
+
+button.brand {
+    background: #DE1A1A;
     color: #FFF;
+    border: 1px solid #ac1515;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    font-size: 12px;
+    -webkit-transition: background .2s;
+    cursor: pointer;
 }
 
-.screen, #startGame, #notification {
-    display: none;
+button.brand:hover {
+    background: #ac1515;
+    -webkit-transition: background .2s;
 }
 
- 
-    
+button.neutral {
+    background: #E8EBF7;
+    color: #385C75;
+    border: 1px solid #CCC;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    font-size: 12px;
+    -webkit-transition: background .2s;
+    cursor: pointer;
+}
+
+button.neutral:hover {
+    background: #CCC;
+    -webkit-transition: background .2s;
+}

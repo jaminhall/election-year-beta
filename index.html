@@ -1,62 +1,28 @@
 <html>
 
 <head>
-    <title>Election Year MMO</title>
+    <title>Election Year Beta</title>
     <link rel="stylesheet" href="/css/main.css" />
+    <!--<script src="/js/jquery.js"></script>-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/angular.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/lobby-directives.js"></script>
+    <script src="/js/game-directives.js"></script>
+    <script src="http://use.edgefonts.net/lato:n9,i4,n1,i7,i9,n7,i1,i3,n4,n3:all.js"></script>
+
+
+
+
 </head>
 
-<body>
-    
-    <div id="notification"></div>
-   
-    <div id="welcome" class="screen">
-        <h1>Election Year</h1>
-        <p id="playerNameError" class="error"></p>
-        <form id="addPlayer">
-            <p>
-                <label>Please enter a player name:</label>
-            </p>
-            <p>
-                <input id="playerNameInput" type="text" />
-            </p>
-            <p>
-                <input type="submit" />
-            </p>
-        </form>
+<body ng-app="GameApp">
+    <div id="title">Election Year Beta</div>
+    <div ng-controller="AppController">
+        <welcome ng-hide="currentPlayer.loggedIn" current-player="currentPlayer"></welcome>
+        <lobby ng-show="currentPlayer.loggedIn && !currentPlayer.inGame" current-player="currentPlayer" players="players"></lobby>
+        <game ng-show="currentPlayer.inGame" current-player="currentPlayer"></game>
     </div>
-
-
-    <div id="lobby" class="screen">
-        <h1>Welcome to the lobby, <span class="playerName"></span></h1>
-        <p>Create or join a game</p>
-        <div>
-            <h2>Open Games</h2>
-            <input id="createGame" type="button" value="Create"></input>
-            <ul id="availableGames"></ul>
-        </div>
-        <div>
-            <h2>Players Online</h2>
-            <ul id="playersOnline"></ul>
-        </div>
-    </div>
-
-    <div id="game" class="screen">
-        <h1><span class="hostName"></span>'s Game</h1>
-        <input id="startGame" type="button" value="Start"></input>
-        <input id="cancelGame" type="button" value="Start"></input>
-        <h2>Players</h2>
-        <ul id="players"></ul>
-        <div id="regions">
-            <ul>
-               
-            </ul>
-        </div>
-    </div>
-
 </body>
-
-<script src="/js/jquery.js"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="/js/main.js"></script>
 
 </html>

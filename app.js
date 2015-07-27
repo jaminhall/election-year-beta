@@ -12,11 +12,12 @@ app.use(express.static('public'));
 server.listen(port);
 
 app.get("/", function (req, res) {
+    //res.sendFile(__dirname + "/index.html");
     res.sendFile(__dirname + "/index.html");
 });
 
 io.sockets.on('connection', function (socket) {
-    socket.on('new player', function (data, callback) {
+    socket.on('player:add', function (data, callback) {
         if (!(data in players)) {
             callback(true);
             socket.player = data;
@@ -28,14 +29,10 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    socket.on('new game', function (data, callback) {
+    socket.on('game:create', function (data, callback) {
         if (!(data in games)) {
-            callback(true);
-            socket.game = Object.create(game);
+            socket.game = game.createGame(game.settings);
             socket.game.name = data;
-            socket.game.players = [];
-            socket.game.settings = game.settings;
-
             games[data] = {
                 socket: socket,
                 game: socket.game
@@ -43,12 +40,13 @@ io.sockets.on('connection', function (socket) {
             socket.join(data);
             updateGames();
             addPlayerToGame(data);
+            callback(true);
         } else {
             callback(false);
         }
     });
 
-    socket.on('join game', function (data, callback) {
+    socket.on('game:join', function (data, callback) {
         if (data in games) {
             socket.join(data);
             addPlayerToGame(data);
@@ -59,7 +57,7 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    socket.on('cancel game', function (data) {
+    socket.on('game:cancel', function (data) {
         if (games[data]) {
             cancelGame(data);
             delete games[data];
@@ -77,18 +75,52 @@ io.sockets.on('connection', function (socket) {
         updateGames();
     });
 
-    socket.on('start game', function (data) {
-        //Shuffle all decks
-        //Pass out cards (1 candidate card, 3 action cards)
-        //Determine playing order
-        //Update all players in the room
-        //Start player 1's turn
+    socket.on('game:start', function (data, callback) {
+        if (games[data]) {
+            var currentGame = games[data].game;
+            //Shuffle all decks
+            currentGame.actionCards = game.shuffle(currentGame.actionCards);
+
+            //Pass out cards (1 candidate card, 3 action cards)
+            game.dealCards(currentGame, game.settings);
+
+            //Determine playing order
+            currentGame.players = game.shuffle(currentGame.players);
+
+            //Update all players in the room
+            updateGame(data);
+
+            //Start player 1's turn
+            startTurn(data, currentGame.currentPlayerIndex);
+
+            callback(true);
+        } else {
+            callback(false);
+        }
+
+
     });
+
+    socket.on('game:endTurn', function (data, callback) {
+        if (games[data]) {
+            var currentGame = games[data].game;
+            currentGame.currentPlayerIndex++;
+            if (currentGame.currentPlayerIndex >= currentGame.players.length) {
+                currentGame.currentPlayerIndex = 0;
+            }
+            startTurn(data, currentGame.currentPlayerIndex);
+        } else {
+            callback(false);
+        }
+    });
+
+
+
 
     function cancelGame(data) {
         console.log("Cancel " + data + " game");
-        io.to(data).emit("cancelGame");
-        //Disconnect all players from the room
+        io.to(data).emit("game:cancelled");
+        //TODO: Disconnect all players from the room
         /*
         io.sockets.clients(data).forEach(function (s) {
             s.leave(data);
@@ -105,10 +137,20 @@ io.sockets.on('connection', function (socket) {
     }
 
     function addPlayerToGame(data) {
-        games[data].game.players.push(socket.player);
-        //console.log("*******************");
-        //console.log(games[data].game);
-        //console.log("*******************");
-        io.to(data).emit("playerAddedToGame", games[data].game);
+        games[data].game.players.push({
+            name: socket.player,
+            hand: [],
+            electorals: [],
+            candidate: {}
+        });
+        updateGame(data);
+    }
+
+    function updateGame(data) {
+        io.to(data).emit("game:updated", games[data].game);
+    }
+
+    function startTurn(data, index) {
+        io.to(data).emit("game:startTurn", index);
     }
 });

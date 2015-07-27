@@ -1,0 +1,41 @@
+<div>
+    <h3>{{currentPlayer.name}} playing in {{gameName}}'s Game</h3>
+    <p ng-hide="players.length > 1">Waiting for at least one more player.</p>
+    <button class="brand" ng-show="currentPlayer.name == gameName && players.length > 1 && !gameStarted" ng-click="startGame()">Start</button>
+</div>
+
+<div ng-show="myTurn">
+    <p>It's your turn. Choose to drive or fly. Play an action card at any time.</p>
+    <button class="brand" ng-click="endTurn()">End Turn</button>
+</div>
+
+<div>
+    <h2>My Hand</h2>
+    <ul class="cards">
+        <li ng-repeat="card in currentPlayer.hand">
+            <h3>{{card.name}}</h3>
+            <p>{{card.desc}}</p>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h2>Players</h2>
+    <ul>
+        <li ng-repeat="player in players">
+            <p>{{player.name}} <em ng-show="player.name == players[currentPlayerIndex].name">---</em>
+            </p>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <h2>Action Cards</h2>
+    <p>{{actionCards.length}}</p>
+    <!--<ul>
+        <li ng-repeat="card in actionCards">
+            <h3>{{card.name}}</h3>
+            <p>{{card.desc}}</p>
+        </li>
+    </ul>-->
+</div>

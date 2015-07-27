@@ -1,0 +1,21 @@
+<div>
+    <h1>Welcome, {{currentPlayer.name}}</h1>
+
+    <h2>Players</h2>
+    <ul>
+        <li ng-repeat="player in players">
+            <p>{{player}}</p>
+        </li>
+    </ul>
+
+    <h2>Games</h2>
+    <button class="brand" ng-click="createGame()">Create</button>
+    <ul>
+        <li ng-repeat="game in games">
+            <p>{{game}}'s game
+                <button class="neutral" ng-click="joinGame(game)">Join</button>
+            </p>
+        </li>
+    </ul>
+
+</div>
