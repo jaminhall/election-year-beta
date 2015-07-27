@@ -1,7 +1,12 @@
 <div id="chat">
     <h2>Chat</h2>
     <div id="received-messages">
-        <p ng-repeat="message in messages"><em>{{message.sender}}</em> {{message.body}}</p>
+        <div class="message" ng-repeat="message in messages">
+            <p><em>{{message.sender}} at {{message.date | date:'mediumTime' }}</em>
+            </p>
+            <p> {{message.body}}</p>
+        </div>
+
     </div>
     <div id="send-message">
         <textarea ng-model="newmessage"></textarea>

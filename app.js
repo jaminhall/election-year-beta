@@ -40,6 +40,7 @@ io.sockets.on('connection', function (socket) {
             socket.join(data);
             updateGames();
             addPlayerToGame(data);
+            sendBotMessage(data, socket.player + " created this game.");
             callback(true);
         } else {
             callback(false);
@@ -50,6 +51,7 @@ io.sockets.on('connection', function (socket) {
         if (data in games) {
             socket.join(data);
             addPlayerToGame(data);
+            sendBotMessage(data, socket.player + " joined the game.");
             callback(true);
         } else {
             console.log("Couldn't find " + data);
@@ -93,6 +95,8 @@ io.sockets.on('connection', function (socket) {
             //Start player 1's turn
             startTurn(data, currentGame.currentPlayerIndex);
 
+            sendBotMessage(data, "Your game has started. Good luck. " + currentGame.players[0].name + " you're up.");
+
             callback(true);
         } else {
             callback(false);
@@ -114,12 +118,19 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
-    socket.on('message:send', function (data) {
-        console.log(data.sender);
-        console.log(data.body);
-        io.sockets.emit('message:received', data);
+    socket.on('message:send', function (message) {
+        if (games[message.game]) {
+            io.to(message.game).emit('message:received', message);
+        }
     });
 
+    function sendBotMessage(group, message) {
+        io.to(group).emit('message:received', {
+            sender: "EYB Bot",
+            date: Date.now(),
+            body: message
+        });
+    }
 
     function cancelGame(data) {
         console.log("Cancel " + data + " game");

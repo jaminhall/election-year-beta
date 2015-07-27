@@ -10,17 +10,22 @@
             },
             controller: function ($scope, socket) {
                 $scope.attemptLogin = function () {
-                    socket.emit('player:add', $scope.currentPlayer.name, function (success) {
-                        if (success) {
-                            $scope.currentPlayer.loggedIn = true;
-                        } else {
-                            $scope.currentPlayer.name = "";
-                            alert("Some already has that name, fool!");
-                        }
-                    });
-                };
+                    if ($scope.currentPlayer.name.length === 0 || !$scope.currentPlayer.name.trim()) {
+                        alert("Please enter a name");
+                    } else {
+                        socket.emit('player:add', $scope.currentPlayer.name, function (success) {
+                            if (success) {
+                                $scope.currentPlayer.loggedIn = true;
+                            } else {
+                                $scope.currentPlayer.name = "";
+                                alert("Some already has that name!");
+                            }
+                        });
+                    }
+                }
             }
-        };
+        }
+
     });
 
     app.directive("lobby", function () {
@@ -41,14 +46,14 @@
                         }
                     });
                 };
-                $scope.joinGame = function(id) {
-                   socket.emit('game:join', id, function (success) {
+                $scope.joinGame = function (id) {
+                    socket.emit('game:join', id, function (success) {
                         if (success) {
                             $scope.currentPlayer.inGame = true;
                         } else {
                             alert("Um. There was a problem joining that game.");
                         }
-                    });  
+                    });
                 };
                 socket.on("players", function (data) {
                     $scope.players = data;

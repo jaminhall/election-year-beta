@@ -12,6 +12,7 @@
             controller: function ($scope, socket) {
                 $currentPlayerIndex = -1;
                 socket.on("game:updated", function (data) {
+                    $scope.currentPlayer.currentGame = data.name;
                     $scope.gameName = data.name;
                     $scope.players = data.players;
                     $scope.actionCards = data.actionCards;
