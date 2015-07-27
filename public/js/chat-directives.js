@@ -22,7 +22,6 @@
                     }
                 };
                 socket.on('message:received', function (message) {
-                    alert(message.sender);
                     $scope.messages.push(message);
                 });
             }
