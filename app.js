@@ -49,6 +49,9 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('game:join', function (data, callback) {
         if (data in games) {
+            socket.game = {
+                name: data
+            }
             socket.join(data);
             addPlayerToGame(data);
             sendBotMessage(data, socket.player + " joined the game.");
@@ -68,6 +71,12 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("disconnect", function (data) {
         if (!socket.player) return;
+        if (socket.game && socket.game.name) {
+            var currentGame = games[socket.game.name].game;
+            game.removePlayer(currentGame, socket.player);
+            updateGame(socket.game.name);
+            sendBotMessage(socket.game.name, socket.player + " disconnected");
+        }
         delete players[socket.player];
         if (games[socket.player]) {
             cancelGame(socket.player);
@@ -113,6 +122,7 @@ io.sockets.on('connection', function (socket) {
                 currentGame.currentPlayerIndex = 0;
             }
             startTurn(data, currentGame.currentPlayerIndex);
+            sendBotMessage(data, currentGame.players[currentGame.currentPlayerIndex].name + " it's your turn.");
         } else {
             callback(false);
         }

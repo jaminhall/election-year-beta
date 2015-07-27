@@ -70,6 +70,15 @@ module.exports = {
                 game.players[i].hand.push(game.actionCards.pop());
             }
         }
+    },
+    removePlayer: function (game, player) {
+        //TODO: Add logic to replace all of the players cards in the decks
+        for (var i = 0; i < game.players.length; i++) {
+            if (game.players[i].name == player) {
+                game.players.splice(i, 1);
+                break;
+            }
+        }
     }
 };
 

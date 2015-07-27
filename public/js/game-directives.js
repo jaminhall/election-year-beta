@@ -30,6 +30,9 @@
                     $scope.currentPlayerIndex = index;
                     $scope.myTurn = $scope.players[$scope.currentPlayerIndex].name == $scope.currentPlayer.name;
                 });
+                socket.on("player:disconnected", function (player) {
+
+                });
                 $scope.startGame = function () {
                     socket.emit("game:start", $scope.gameName, function (success) {
                         if (success) {
@@ -48,6 +51,18 @@
                         }
                     });
                 };
+                $scope.playCard = function (card) {
+                    if ($scope.myTurn) {
+                        //Take action
+                        //Remove the card from the player's hand
+                        for (var i = $scope.currentPlayer.hand.length; i >= 0; i--) {
+                            if (card == $scope.currentPlayer.hand[i]) {
+                                $scope.currentPlayer.hand.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         };
     });

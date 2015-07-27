@@ -12,7 +12,7 @@
 <div>
     <h2>My Hand</h2>
     <ul class="cards">
-        <li ng-repeat="card in currentPlayer.hand">
+        <li ng-repeat="card in currentPlayer.hand" ng-click="playCard(card)">
             <h3>{{card.name}}</h3>
             <p>{{card.desc}}</p>
         </li>
