@@ -10,11 +10,22 @@
 </div>
 
 <div>
+    <h2>Candidate Profile</h2>
+    <img ng-src="/img/{{currentPlayer.candidateCard.image}}" />
+    <p>Name: {{currentPlayer.candidateCard.name}}</p>
+    <p>Home Town: {{currentPlayer.candidateCard.homeRegion}}</p>
+    <p>Reputation: {{currentPlayer.candidateCard.reputation}}</p>
     <h2>My Hand</h2>
     <ul class="cards">
         <li ng-repeat="card in currentPlayer.hand" ng-click="playCard(card)">
             <h3>{{card.name}}</h3>
             <p>{{card.desc}}</p>
+        </li>
+    </ul>
+    <h2>Votes</h2>
+    <ul>
+        <li ng-repeat="regionCard in currentPlayer.regionCards">
+            <p>{{regionCard.name}}: {{regionCard.value}}</p>
         </li>
     </ul>
 </div>

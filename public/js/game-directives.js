@@ -19,6 +19,9 @@
                     for (var i in $scope.players) {
                         if ($scope.players[i].name == $scope.currentPlayer.name) {
                             $scope.currentPlayer.hand = data.players[i].hand;
+                            $scope.currentPlayer.regionCards = data.players[i].regionCards;
+                            $scope.currentPlayer.candidateCard = data.players[i].candidateCard;
+                            console.log($scope.currentPlayer.regionCards);
                         }
                     }
 

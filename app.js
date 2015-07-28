@@ -91,6 +91,8 @@ io.sockets.on('connection', function (socket) {
             var currentGame = games[data].game;
             //Shuffle all decks
             currentGame.actionCards = game.shuffle(currentGame.actionCards);
+            currentGame.regionCards = game.shuffle(currentGame.regionCards);
+            currentGame.candidateCards = game.shuffle(currentGame.candidateCards);
 
             //Pass out cards (1 candidate card, 3 action cards)
             game.dealCards(currentGame, game.settings);
