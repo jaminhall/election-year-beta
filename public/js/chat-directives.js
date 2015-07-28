@@ -32,6 +32,10 @@
                     }, 1000);
                 });
 
+                socket.on('game:cancelled', function () {
+                    $scope.messages = [];
+                });
+
                 $('#send-message textarea').keyup(function (e) {
                     if ((e.keyCode || e.which) == 13) { //Enter keycode
                         $scope.sendMessage();

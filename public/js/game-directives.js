@@ -1,5 +1,5 @@
 (function () {
-    var app = angular.module("game-directives", []);
+    var app = angular.module("game-directives", ["map-directive"]);
 
 
     app.directive("game", function () {
@@ -26,7 +26,19 @@
                     }
 
                 });
+                socket.on("game:started", function () {
+                    $scope.gameStarted = true;
+                });
                 socket.on("game:cancelled", function () {
+                    $scope.gameStarted = false;
+                    $scope.myTurn = false;
+                    $scope.currentPlayer.hand = [];
+                    $scope.currentPlayer.regionCards = [];
+                    $scope.currentPlayer.candidateCard = {
+                        image: ""
+                    };
+                    $scope.currentPlayer.actionCards = [];
+                    $scope.gameName = "";
                     $scope.currentPlayer.inGame = false;
                 });
                 socket.on("game:startTurn", function (index) {
@@ -39,7 +51,7 @@
                 $scope.startGame = function () {
                     socket.emit("game:start", $scope.gameName, function (success) {
                         if (success) {
-                            $scope.gameStarted = true;
+                            //$scope.gameStarted = true;
                         } else {
 
                         }
@@ -65,7 +77,10 @@
                             }
                         }
                     }
-                }
+                };
+                $scope.mapClicked = function (region) {
+                    alert(region);
+                };
             }
         };
     });

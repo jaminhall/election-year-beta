@@ -9,12 +9,16 @@
     <button class="brand" ng-click="endTurn()">End Turn</button>
 </div>
 
-<div>
+<div ng-show="gameStarted">
     <h2>Candidate Profile</h2>
     <img ng-src="/img/{{currentPlayer.candidateCard.image}}" />
     <p>Name: {{currentPlayer.candidateCard.name}}</p>
     <p>Home Town: {{currentPlayer.candidateCard.homeRegion}}</p>
     <p>Reputation: {{currentPlayer.candidateCard.reputation}}</p>
+    <h2>Map</h2>
+    <div>
+        <map ng-show="gameStarted"></map>
+    </div>
     <h2>My Hand</h2>
     <ul class="cards">
         <li ng-repeat="card in currentPlayer.hand" ng-click="playCard(card)">

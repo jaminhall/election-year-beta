@@ -35,7 +35,8 @@ io.sockets.on('connection', function (socket) {
             socket.game.name = data;
             games[data] = {
                 socket: socket,
-                game: socket.game
+                game: socket.game,
+                sockets: [socket]
             };
             socket.join(data);
             updateGames();
@@ -52,6 +53,7 @@ io.sockets.on('connection', function (socket) {
             socket.game = {
                 name: data
             }
+            games[data].sockets.push(socket);
             socket.join(data);
             addPlayerToGame(data);
             sendBotMessage(data, socket.player + " joined the game.");
@@ -71,7 +73,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on("disconnect", function (data) {
         if (!socket.player) return;
-        if (socket.game && socket.game.name) {
+        if (socket.game && socket.game.name && games[socket.game.name]) {
             var currentGame = games[socket.game.name].game;
             game.removePlayer(currentGame, socket.player);
             updateGame(socket.game.name);
@@ -85,6 +87,16 @@ io.sockets.on('connection', function (socket) {
         updatePlayers();
         updateGames();
     });
+
+    /*socket.on("game:quit", function (data) {
+        if (!socket.player) return;
+        if (socket.game && socket.game.name && games[socket.game.name]) {
+            var currentGame = games[socket.game.name].game;
+            game.removePlayer(currentGame, socket.player);
+            updateGame(socket.game.name);
+            sendBotMessage(socket.game.name, socket.player + " disconnected");
+        }
+    }*/
 
     socket.on('game:start', function (data, callback) {
         if (games[data]) {
@@ -102,6 +114,8 @@ io.sockets.on('connection', function (socket) {
 
             //Update all players in the room
             updateGame(data);
+
+            io.to(data).emit("game:started");
 
             //Start player 1's turn
             startTurn(data, currentGame.currentPlayerIndex);
@@ -148,11 +162,11 @@ io.sockets.on('connection', function (socket) {
         console.log("Cancel " + data + " game");
         io.to(data).emit("game:cancelled");
         //TODO: Disconnect all players from the room
-        /*
-        io.sockets.clients(data).forEach(function (s) {
+
+        games[data].sockets.forEach(function (s) {
             s.leave(data);
         });
-        */
+
     }
 
     function updatePlayers() {

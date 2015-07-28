@@ -195,3 +195,7 @@ button.neutral:hover {
     background: #CCC;
     -webkit-transition: background .2s;
 }
+
+#map #region15:hover  {
+    fill: #f5ff00;
+}
