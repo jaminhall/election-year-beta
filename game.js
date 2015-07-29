@@ -4,22 +4,82 @@ module.exports = {
         actionCards: [
             {
                 name: "Flat Tire",
-                desc: "Lorem ipsum",
+                desc: "Play this card anytime. This card removes two movements from your opponents travel.",
                 count: 10
                 },
             {
-                name: "Card 2",
-                desc: "Lorem ipsum",
+                name: "Take a Picture with a Baby",
+                desc: "Playing this card earns you one extra vote card for one region during one turn only.",
                 count: 5
                 },
             {
-                name: "Card 3",
-                desc: "Lorem ipsum",
+                name: "Neative Ad",
+                desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs down, remove one vote from your starting state to your hand.",
                 count: 10
                 },
             {
-                name: "Card 4",
-                desc: "Lorem ipsum",
+                name: "Neative Ad",
+                desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs up, remove one vote from your starting state to your hand.",
+                count: 5
+                },
+            {
+                name: "Positive Ad",
+                desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs down, add one vote from your starting state to your hand.",
+                count: 5
+                },
+            {
+                name: "Positive Ad",
+                desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs up, add one vote from your starting state to your hand.",
+                count: 5
+                },
+            {
+                name: "Public Speech",
+                desc: "Play this card for a chance to remove a distraction or a negative ad. If the next round’s Public Sentiment card is a thumbs up, you were convincing. If not, this card has no effect.",
+                count: 5
+                },
+            {
+                name: "Baggage",
+                desc: "Upon drawing this card you must place it in front of your hand. Any negative ads in front of you are now twice as effective.",
+                count: 5
+                },
+            {
+                name: "Home Base",
+                desc: "When played, set this card in front of your opponent’s hand. Requires your opponent to return to their home state for one turn. Lose 1 vote from the current region you are in for every turn this card is in effect.",
+                count: 5
+                },
+            {
+                name: "Moody Public",
+                desc: "The public has changed it’s mind.. Turn over a new Public Sentiment card. Each of those new rules are in effect. ",
+                count: 5
+                },
+            {
+                name: "Clean Slate",
+                desc: "You may play this card on yourself or any player. This card removes all of the positive and negative effects from a player",
+                count: 5
+                },
+            {
+                name: "1st Class Pass",
+                desc: "During your turn, play this card in place of 2 movements then move your piece to any state that is not occupied.",
+                count: 5
+                },
+            {
+                name: "Public Blunder",
+                desc: "Play this card immediately. Wherever you travel this turn, you must remove one vote from that region from your hand",
+                count: 5
+                },
+            {
+                name: "Broken Leg",
+                desc: "You must play this card immediately. Your travel is restricted by one this turn",
+                count: 5
+                },
+            {
+                name: "All Nighter",
+                desc: "Play this card at anytime to gain one extra movement",
+                count: 5
+                },
+            {
+                name: "“Hunting Accident”",
+                desc: "Play this card immediately. Oops you shot your opponent in the butt during a hunting accident. If the Public Sentiment is thumbs up, gain one vote from your current location. If thumbs down, lose one random vote",
                 count: 5
                 }
             ],
