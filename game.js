@@ -13,12 +13,12 @@ module.exports = {
                 count: 5
                 },
             {
-                name: "Neative Ad",
+                name: "Negative Ad",
                 desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs down, remove one vote from your starting state to your hand.",
                 count: 10
                 },
             {
-                name: "Neative Ad",
+                name: "Negative Ad",
                 desc: "Set this card in front of you. At the beginning of your turn, if the Public Sentiment card is thumbs up, remove one vote from your starting state to your hand.",
                 count: 5
                 },

@@ -46,8 +46,8 @@
             <path d="M450.108151,50.6176002 L457.306964,77.4454975 L476.884463,70.6824909 L476.352601,56.8629753 L498.434654,42.4528973 L499.580203,33.1977886 L490.326873,27.0680356 L487.043204,14.39229 L483.266806,13.9369166 L480.123662,17.5372125 L477.15662,13.3232297 L472.843024,13.79817 L464.000598,47.6843551 L450.108151,50.6176002 Z" id="region1" fill="#008FCC" sketch:type="MSShapeGroup" ng-click="mapClicked('region1')"></path>
         </g>
     </g>
-    <!--
-    <svg x="100" y="100" id="player1">
+    
+    <svg x="{{currentPlayer.x}}" y="{{currentPlayer.y}}" id="player1">
         <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="gray" />
         <text x="0" y="40" fill="black">Me</text>
     </svg>
@@ -63,7 +63,7 @@
         <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="brown" />
         <text x="0" y="40" fill="black">Player 4</text>
     </svg>
-    -->
+    
     
     
 </svg>
