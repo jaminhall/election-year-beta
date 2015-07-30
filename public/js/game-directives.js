@@ -21,6 +21,7 @@
                             $scope.currentPlayer.hand = data.players[i].hand;
                             $scope.currentPlayer.regionCards = data.players[i].regionCards;
                             $scope.currentPlayer.candidateCard = data.players[i].candidateCard;
+
                             console.log($scope.currentPlayer.regionCards);
                         }
                     }
@@ -44,6 +45,9 @@
                 socket.on("game:startTurn", function (index) {
                     $scope.currentPlayerIndex = index;
                     $scope.myTurn = $scope.players[$scope.currentPlayerIndex].name == $scope.currentPlayer.name;
+                    $scope.currentPlayer.airTravel = $scope.players[$scope.currentPlayerIndex].airTravel;
+                    $scope.currentPlayer.roadTravel = $scope.players[$scope.currentPlayerIndex].roadTravel;
+                    $scope.currentPlayer.isTravelling = false;
                 });
                 socket.on("player:disconnected", function (player) {
 
@@ -78,6 +82,15 @@
                         }
                     }
                 };
+                $scope.chooseTravelMethod = function (method) {
+                    socket.emit("game:setTravelMethod", {
+                        gameName: $scope.gameName,
+                        travelMethod: method
+                    }, function (success) {
+                        $scope.currentPlayer.isTravelling = true;
+                    });
+                };
+
                 $scope.mapClicked = function (region) {
                     alert(region);
                 };
