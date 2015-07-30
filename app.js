@@ -113,7 +113,7 @@ io.sockets.on('connection', function (socket) {
             currentGame.players = game.shuffle(currentGame.players);
 
             //Update all players in the room
-            updateGame(data);
+            //updateGame(data);
 
             io.to(data).emit("game:started");
 
@@ -137,11 +137,23 @@ io.sockets.on('connection', function (socket) {
             if (currentGame.currentPlayerIndex >= currentGame.players.length) {
                 currentGame.currentPlayerIndex = 0;
             }
+
             startTurn(data, currentGame.currentPlayerIndex);
             sendBotMessage(data, currentGame.players[currentGame.currentPlayerIndex].name + " it's your turn.");
         } else {
             callback(false);
         }
+    });
+
+    socket.on('game:setTravelMethod', function (data, callback) {
+        if (games[data.gameName]) {
+            var currentGame = games[data.gameName].game;
+            sendBotMessage(data.gameName, currentGame.players[currentGame.currentPlayerIndex].name + " is going to " + data.travelMethod + ".");
+            callback(true);
+        } else {
+            callback(false);
+        }
+
     });
 
     socket.on('message:send', function (message) {
@@ -192,6 +204,13 @@ io.sockets.on('connection', function (socket) {
     }
 
     function startTurn(data, index) {
+        var currentGame = games[data].game;
+        currentGame.players[index].airTravel = currentGame.defaultAirTravel;
+        currentGame.players[index].roadTravel = currentGame.defaultRoadTravel;
+        console.log("***********************");
+        console.log(currentGame.players[index].airTravel);
+        console.log("***********************");
+        updateGame(data);
         io.to(data).emit("game:startTurn", index);
     }
 });

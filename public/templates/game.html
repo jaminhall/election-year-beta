@@ -5,7 +5,12 @@
 </div>
 
 <div ng-show="myTurn">
-    <p>It's your turn. Choose to drive or fly. Play an action card at any time.</p>
+    <p>It's your turn.</p>
+    <div ng-hide="currentPlayer.isTravelling">
+        <p>Choose to drive or fly. Play an action card at any time.</p>
+        <button class="neutral" ng-click="chooseTravelMethod('drive')">Drive ({{currentPlayer.roadTravel}})</button>
+        <button class="neutral" ng-click="chooseTravelMethod('fly')">Fly ({{currentPlayer.airTravel}})</button>
+    </div>
     <button class="brand" ng-click="endTurn()">End Turn</button>
 </div>
 
