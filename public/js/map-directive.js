@@ -16,66 +16,67 @@
                     var position = {
                         game: $scope.currentPlayer.currentGame,
                         playerName: $scope.currentPlayer.name,
+                        region: region,
                         x: 0,
                         y: 0
                     }
-                    if (region == "region1") {
+                    if (region == "Region 1") {
                         position.x = 460;
                         position.y = 30;
                     }
-                    if (region == "region2") {
+                    if (region == "Region 2") {
                         position.x = 425;
                         position.y = 62;
                     }
-                    if (region == "region3") {
+                    if (region == "Region 3") {
                         position.x = 420;
                         position.y = 100;
                     }
-                    if (region == "region4") {
+                    if (region == "Region 4") {
                         position.x = 395;
                         position.y = 248;
                     }
-                    if (region == "region5") {
+                    if (region == "Region 5") {
                         position.x = 355;
                         position.y = 208;
                     }
-                    if (region == "region6") {
+                    if (region == "Region 6") {
                         position.x = 360;
                         position.y = 160;
                     }
-                    if (region == "region7") {
+                    if (region == "Region 7") {
                         position.x = 355;
                         position.y = 90;
                     }
-                    if (region == "region8") {
+                    if (region == "Region 8") {
                         position.x = 280;
                         position.y = 180;
                     }
-                    if (region == "region9") {
+                    if (region == "Region 9") {
                         position.x = 280;
                         position.y = 80;
                     }
-                    if (region == "region10") {
+                    if (region == "Region 10") {
                         position.x = 215;
                         position.y = 110;
                     }
-                    if (region == "region11") {
+                    if (region == "Region 11") {
                         position.x = 210;
                         position.y = 220;
                     }
-                    if (region == "region12") {
+                    if (region == "Region 12") {
                         position.x = 110;
                         position.y = 140;
                     }
-                    if (region == "region13") {
+                    if (region == "Region 13") {
                         position.x = 15;
                         position.y = 130;
                     }
-                    if (region == "region14") {
+                    if (region == "Region 14") {
                         position.x = 80;
                         position.y = 40;
                     }
-                    if (region == "region15") {
+                    if (region == "Region 15") {
                         position.x = 60;
                         position.y = 310;
                     }

@@ -36,6 +36,7 @@ io.sockets.on('connection', function (socket) {
             if (currentGame.players[i].name == position.playerName) {
                 currentGame.players[i].x = position.x + (i * 5);
                 currentGame.players[i].y = position.y;
+                currentGame.players[i].currentRegion = position.region;
                 updateGame(position.game);
                 break;
             }
@@ -143,6 +144,22 @@ io.sockets.on('connection', function (socket) {
 
     });
 
+    socket.on('game:playCard', function (data, callback) {
+        console.log("Playing card " + data.card.name);
+        console.log(data.player);
+        var currentGame = games[data.game].game;
+        if (game.playCard(currentGame, data.player, game.settings, data.card.name)) {
+            callback(true);
+            sendBotMessage(data.game, data.player.name + " played " + data.card.name + ".");
+            updateGame(data.game);
+        } else {
+            callback(false);
+            sendBotMessage(data.game, data.player.name + " tried to play " + data.card.name + ", but couldn't.");
+        };
+
+        //console.log(data.card);
+    });
+
     socket.on('game:endTurn', function (data, callback) {
         if (games[data]) {
             var currentGame = games[data].game;
@@ -220,9 +237,6 @@ io.sockets.on('connection', function (socket) {
         var currentGame = games[data].game;
         currentGame.players[index].airTravel = currentGame.defaultAirTravel;
         currentGame.players[index].roadTravel = currentGame.defaultRoadTravel;
-        console.log("***********************");
-        console.log(currentGame.players[index].airTravel);
-        console.log("***********************");
         updateGame(data);
         io.to(data).emit("game:startTurn", index);
     }

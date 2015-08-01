@@ -131,9 +131,11 @@ ul.cards li {
     margin: 0 20px 0 0;
     border: 1px solid #CCC;
     text-align: center;
+    text-overflow: ellipsis;
     -webkit-transition: background .2s;
     cursor: pointer;
     box-sizing: content-box;
+    overflow: hidden;
 }
 
 ul.cards li:hover {
@@ -196,6 +198,6 @@ button.neutral:hover {
     -webkit-transition: background .2s;
 }
 
-#map #region15:hover  {
+#map #region15:hover {
     fill: #f5ff00;
 }

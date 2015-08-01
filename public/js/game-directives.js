@@ -21,8 +21,7 @@
                             $scope.currentPlayer.hand = data.players[i].hand;
                             $scope.currentPlayer.regionCards = data.players[i].regionCards;
                             $scope.currentPlayer.candidateCard = data.players[i].candidateCard;
-
-                            console.log($scope.currentPlayer.regionCards);
+                            $scope.currentPlayer.currentRegion = data.players[i].currentRegion;
                         }
                     }
 
@@ -73,13 +72,29 @@
                 $scope.playCard = function (card) {
                     if ($scope.myTurn) {
                         //Take action
-                        //Remove the card from the player's hand
-                        for (var i = $scope.currentPlayer.hand.length; i >= 0; i--) {
-                            if (card == $scope.currentPlayer.hand[i]) {
-                                $scope.currentPlayer.hand.splice(i, 1);
-                                break;
-                            }
+                        var action = {
+                            card: card,
+                            player: $scope.currentPlayer,
+                            game: $scope.gameName
                         }
+                        socket.emit("game:playCard", action, function (success) {
+                            if (success) {
+                                /* console.log($scope.currentPlayer.hand);
+                                 for (var i = $scope.currentPlayer.hand.length - 1; i >= 0; i--) {
+                                     console.log($scope.currentPlayer.hand[i]);
+                                     if (card.name == $scope.currentPlayer.hand[i].name) {
+                                         console.log("Yes");
+                                         $scope.currentPlayer.hand.splice(i, 1);
+                                         break;
+                                     }
+                                 }
+                                 console.log($scope.currentPlayer.hand);
+                                 */
+                            }
+                        });
+
+
+
                     }
                 };
                 $scope.chooseTravelMethod = function (method) {
