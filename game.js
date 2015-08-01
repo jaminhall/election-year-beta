@@ -3,6 +3,12 @@ module.exports = {
         startingCardCount: 3,
         actionCards: [
             {
+                name: "Win the Game",
+                desc: "Play this card to collect all votes",
+                count: 5,
+                play: gameEndTest
+            },
+            {
                 name: "Flat Tire",
                 desc: "Play this card anytime. This card removes two movements from your opponents travel.",
                 /*count: 10*/
@@ -12,7 +18,7 @@ module.exports = {
                 name: "Take a Picture with a Baby",
                 desc: "Playing this card earns you one extra vote card for one region during one turn only.",
                 /*count: 5,*/
-                count: 60,
+                count: 5,
                 play: pictureWithBaby
                 },
             {
@@ -300,6 +306,9 @@ module.exports = {
             }
         }
         return false;
+    },
+    checkGameOver: function (game) {
+        return game.regionCards.length == 0;
     }
 };
 
@@ -363,23 +372,33 @@ function createCandidateDeck(source) {
     return deck;
 }
 
+
+
+
 /****************************************\
                ACTION CARDS
 \****************************************/
 function pictureWithBaby(game, player) {
-    console.log(player.currentRegion);
     var card = takeRegionCard(game, player.currentRegion);
     if (card != undefined) {
         for (var i in game.players) {
             if (game.players[i].name == player.name) {
                 game.players[i].regionCards.push(card);
-                console.log(card);
             }
         }
         return true;
     } else {
         return false;
     }
-    // player.regionCards.push(card);
+}
 
+function gameEndTest(game, player) {
+    for (var k in game.players) {
+        if (game.players[k].name == player.name) {
+            for (var i = game.regionCards.length - 1; i >= 0; i--) {
+                game.players[k].regionCards.push(takeRegionCard(game, game.regionCards[i].name));
+            }
+        }
+    }
+    return true;
 }

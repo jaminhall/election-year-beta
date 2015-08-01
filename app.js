@@ -146,11 +146,14 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('game:playCard', function (data, callback) {
         console.log("Playing card " + data.card.name);
-        console.log(data.player);
         var currentGame = games[data.game].game;
         if (game.playCard(currentGame, data.player, game.settings, data.card.name)) {
             callback(true);
             sendBotMessage(data.game, data.player.name + " played " + data.card.name + ".");
+            if (game.checkGameOver(currentGame)) {
+                sendBotMessage(data.game, "Game Over");
+            };
+
             updateGame(data.game);
         } else {
             callback(false);
