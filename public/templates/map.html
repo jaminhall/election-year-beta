@@ -79,11 +79,16 @@
         </g>
     </g>
 
-    <g transform="translate({{currentPlayer.x}}, {{currentPlayer.y}})" id="player1" ng-click="mapClicked('region1')">
-        <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="gray" />
-        <text x="0" y="40" fill="black">Me</text>
-    </g>
-    <svg x="200" y="100" id="player2">
+    <svg ng-repeat="player in players">
+        <g transform="translate({{player.x}}, {{player.y}})" id="{{player.name}}">
+            <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="{{player.color}}" />
+            <text x="0" y="40" fill="black">{{player.name}}</text>
+        </g>
+    </svg>
+
+
+
+    <!--<svg x="200" y="100" id="player2">
         <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="green" />
         <text x="0" y="40" fill="black">Player 2</text>
     </svg>
@@ -94,5 +99,5 @@
     <svg x="400" y="100" id="player4">
         <circle cx="10" cy="10" r="10" stroke="black" stroke-width="1" fill="brown" />
         <text x="0" y="40" fill="black">Player 4</text>
-    </svg>
+    </svg>-->
 </svg>

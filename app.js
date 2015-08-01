@@ -29,6 +29,19 @@ io.sockets.on('connection', function (socket) {
         }
     });
 
+    socket.on('player:move', function (position, callback) {
+        var currentGame = games[position.game].game;
+
+        for (var i = 0; i < currentGame.players.length; i++) {
+            if (currentGame.players[i].name == position.playerName) {
+                currentGame.players[i].x = position.x + (i * 5);
+                currentGame.players[i].y = position.y;
+                updateGame(position.game);
+                break;
+            }
+        }
+    });
+
     socket.on('game:create', function (data, callback) {
         if (!(data in games)) {
             socket.game = game.createGame(game.settings);
@@ -107,7 +120,7 @@ io.sockets.on('connection', function (socket) {
             currentGame.candidateCards = game.shuffle(currentGame.candidateCards);
 
             //Pass out cards (1 candidate card, 3 action cards)
-            game.dealCards(currentGame, game.settings);
+            game.setup(currentGame, game.settings);
 
             //Determine playing order
             currentGame.players = game.shuffle(currentGame.players);

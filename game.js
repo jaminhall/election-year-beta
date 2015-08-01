@@ -89,42 +89,72 @@ module.exports = {
                 desc: "Lorem ipsum",
                 reputation: 2,
                 homeRegion: "Region 1",
-                image: "senator.jpg"
+                image: "senator.jpg",
+                color: "green",
+                startPos: {
+                    x: 460,
+                    y: 30
+                }
             },
             {
                 name: "The Governor",
                 desc: "Lorem ipsum",
                 reputation: 3,
                 homeRegion: "Region 3",
-                image: "governor.jpg"
+                image: "governor.jpg",
+                color: "purple",
+                startPos: {
+                    x: 420,
+                    y: 100
+                }
             },
             {
                 name: "The Frontrunner",
                 desc: "Lorem ipsum",
                 reputation: 4,
                 homeRegion: "Region 5",
-                image: "frontrunner.jpg"
+                image: "frontrunner.jpg",
+                color: "brown",
+                startPos: {
+                    x: 355,
+                    y: 208
+                }
             },
             {
                 name: "The Newcomer",
                 desc: "Lorem ipsum",
                 reputation: 1,
                 homeRegion: "Region 7",
-                image: "newcomer.jpg"
+                image: "newcomer.jpg",
+                color: "gray",
+                startPos: {
+                    x: 355,
+                    y: 90
+                }
             },
             {
                 name: "The Gaffe Machine",
                 desc: "Lorem ipsum",
                 reputation: 2,
                 homeRegion: "Region 9",
-                image: "gaffemachine.jpg"
+                image: "gaffemachine.jpg",
+                color: "pink",
+                startPos: {
+                    x: 280,
+                    y: 80
+                }
             },
             {
                 name: "The Old Timer",
                 desc: "Lorem ipsum",
                 reputation: 2,
                 homeRegion: "Region 11",
-                image: "oldtimer.jpg"
+                image: "oldtimer.jpg",
+                color: "white",
+                startPos: {
+                    x: 210,
+                    y: 220
+                }
             }
         ],
         regionCards: [
@@ -212,12 +242,15 @@ module.exports = {
         }
         return array;
     },
-    dealCards: function (game, settings) {
+    setup: function (game, settings) {
         for (var i in game.players) {
             for (var j = 0; j < settings.startingCardCount; j++) {
                 game.players[i].hand.push(game.actionCards.pop());
             }
             game.players[i].candidateCard = game.candidateCards[i];
+            game.players[i].x = game.players[i].candidateCard.startPos.x;
+            game.players[i].y = game.players[i].candidateCard.startPos.y;
+            game.players[i].color = game.players[i].candidateCard.color;
             game.players[i].regionCards = [takeRegionCard(game, game.players[i].candidateCard.homeRegion)];
         }
     },
@@ -283,7 +316,9 @@ function createCandidateDeck(source) {
             desc: source[i].desc,
             reputation: source[i].reputation,
             homeRegion: source[i].homeRegion,
-            image: source[i].image
+            image: source[i].image,
+            color: source[i].color,
+            startPos: source[i].startPos
         });
     }
     return deck;
