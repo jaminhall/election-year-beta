@@ -309,6 +309,22 @@ module.exports = {
     },
     checkGameOver: function (game) {
         return game.regionCards.length == 0;
+    },
+    getWinner: function (game) {
+        var winner,
+            points,
+            highestPoints = 0;
+        for (var i in game.players) {
+            points = 0;
+            for (var j in game.players[i].regionCards) {
+                points += game.players[i].regionCards[j].value;
+            }
+            if (points > highestPoints) {
+                winner = game.players[i];
+                highestPoints = points;
+            }
+        }
+        return winner;
     }
 };
 

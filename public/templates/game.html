@@ -1,61 +1,89 @@
-<div>
-    <h3>{{currentPlayer.name}} playing in {{gameName}}'s Game</h3>
-    <p ng-hide="players.length > 1">Waiting for at least one more player.</p>
-    <button class="brand" ng-show="currentPlayer.name == gameName && players.length > 1 && !gameStarted" ng-click="startGame()">Start</button>
-</div>
+<div id="boardWrapper">
+    <div id="gameInfo">
+        <h3>{{currentPlayer.name}} playing in {{gameName}}'s Game</h3>
+        <p ng-hide="players.length > 1">Waiting for at least one more player.</p>
+        <button class="brand" ng-show="currentPlayer.name == gameName && players.length > 1 && !gameStarted" ng-click="startGame()">Start</button>
 
-<div ng-show="myTurn">
-    <p>It's your turn.</p>
-    <div ng-hide="currentPlayer.isTravelling">
-        <p>Choose to drive or fly. Play an action card at any time.</p>
-        <button class="neutral" ng-click="chooseTravelMethod('drive')">Drive ({{currentPlayer.roadTravel}})</button>
-        <button class="neutral" ng-click="chooseTravelMethod('fly')">Fly ({{currentPlayer.airTravel}})</button>
+        <div class="action-buttons">
+            <div ng-show="myTurn">
+                <div ng-hide="currentPlayer.isTravelling">
+                    <button class="neutral" ng-click="chooseTravelMethod('drive')">Drive ({{currentPlayer.roadTravel}})</button>
+                    <button class="neutral" ng-click="chooseTravelMethod('fly')">Fly ({{currentPlayer.airTravel}})</button>
+                </div>
+                <button class="brand" ng-click="endTurn()">End Turn</button>
+            </div>
+        </div>
+        <div class="column">
+            <h2>Players</h2>
+            <ul>
+                <li ng-repeat="player in players">
+                    <p>{{player.name}} <em ng-show="player.name == players[currentPlayerIndex].name">---</em>
+                    </p>
+                </li>
+            </ul>
+        </div>
+
+        <div class="column">
+            <h2>Action Cards</h2>
+            <button class="neutral" ng-click="showHand=true">View Hand</button>
+        </div>
+
+        <div class="column">
+            <h2>Votes</h2>
+            <button class="neutral" ng-click="showPoints=true">View Votes</button>
+        </div>
+
+        <div class="clear"></div>
     </div>
-    <button class="brand" ng-click="endTurn()">End Turn</button>
-</div>
 
-<div ng-show="gameStarted">
-    <h2>Candidate Profile</h2>
-    <img ng-src="/img/{{currentPlayer.candidateCard.image}}" />
-    <p>Name: {{currentPlayer.candidateCard.name}}</p>
-    <p>Home Town: {{currentPlayer.candidateCard.homeRegion}}</p>
-    <p>Reputation: {{currentPlayer.candidateCard.reputation}}</p>
-    <h2>Map</h2>
-    <div>
-        <map ng-show="gameStarted" current-player="currentPlayer"></map>
+
+
+
+    <div id="profile" ng-show="gameStarted">
+        <h2>Candidate Profile</h2>
+        <img ng-src="/img/{{currentPlayer.candidateCard.image}}" />
+        <p>Name: {{currentPlayer.candidateCard.name}}</p>
+        <p>Home Town: {{currentPlayer.candidateCard.homeRegion}}</p>
+        <p>Reputation: {{currentPlayer.candidateCard.reputation}}</p>
     </div>
-    <h2>My Hand</h2>
-    <ul class="cards">
-        <li ng-repeat="card in currentPlayer.hand" ng-click="playCard(card)">
-            <h3>{{card.name}}</h3>
-            <p>{{card.desc}}</p>
-        </li>
-    </ul>
-    <h2>Votes</h2>
-    <ul>
-        <li ng-repeat="regionCard in currentPlayer.regionCards">
-            <p>{{regionCard.name}}: {{regionCard.value}}</p>
-        </li>
-    </ul>
+
+    <div id="map" ng-show="gameStarted">
+        <map current-player="currentPlayer"></map>
+    </div>
+
 </div>
 
-<div>
-    <h2>Players</h2>
-    <ul>
-        <li ng-repeat="player in players">
-            <p>{{player.name}} <em ng-show="player.name == players[currentPlayerIndex].name">---</em>
-            </p>
-        </li>
-    </ul>
+<div class="modal" ng-show="myTurnStarted">
+    <div class="modal-contents">
+        <h2>It's your turn...</h2>
+        <p>Choose a travel method and play an action card any time.</p>
+        <button class="brand" ng-click="myTurnStarted=false">Let's do this</button>
+    </div>
 </div>
 
-<div>
-    <h2>Action Cards</h2>
-    <p>{{actionCards.length}}</p>
-    <!--<ul>
-        <li ng-repeat="card in actionCards">
-            <h3>{{card.name}}</h3>
-            <p>{{card.desc}}</p>
-        </li>
-    </ul>-->
+<div class="modal" ng-show="showHand">
+    <div class="modal-contents">
+        <h2>My Hand</h2>
+        <ul class="cards">
+            <li ng-repeat="card in currentPlayer.hand" ng-click="playCard(card)">
+                <h3>{{card.name}}</h3>
+                <p>{{card.desc}}</p>
+            </li>
+        </ul>
+        <button class="brand" ng-click="showHand=false">Close</button>
+    </div>
+</div>
+
+<div class="modal" ng-show="showPoints">
+    <div class="modal-contents">
+        <h2>Votes</h2>
+        <ul>
+            <li ng-repeat="regionCard in currentPlayer.regionCards">
+                <p>{{regionCard.name}}: {{regionCard.value}}</p>
+            </li>
+        </ul>
+        <button class="brand" ng-click="showPoints=false">Close</button>
+    </div>
+
+</div>
 </div>

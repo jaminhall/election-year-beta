@@ -43,10 +43,14 @@
                 });
                 socket.on("game:startTurn", function (index) {
                     $scope.currentPlayerIndex = index;
-                    $scope.myTurn = $scope.players[$scope.currentPlayerIndex].name == $scope.currentPlayer.name;
+                    $scope.myTurnStarted = $scope.myTurn = $scope.players[$scope.currentPlayerIndex].name == $scope.currentPlayer.name;
                     $scope.currentPlayer.airTravel = $scope.players[$scope.currentPlayerIndex].airTravel;
                     $scope.currentPlayer.roadTravel = $scope.players[$scope.currentPlayerIndex].roadTravel;
                     $scope.currentPlayer.isTravelling = false;
+                    if ($scope.myTurnStarted) {
+                        $scope.showHand = false;
+                        $scope.showPoints = false;
+                    }
                 });
                 socket.on("player:disconnected", function (player) {
 

@@ -151,7 +151,8 @@ io.sockets.on('connection', function (socket) {
             callback(true);
             sendBotMessage(data.game, data.player.name + " played " + data.card.name + ".");
             if (game.checkGameOver(currentGame)) {
-                sendBotMessage(data.game, "Game Over");
+                var winner = game.getWinner(currentGame);
+                sendBotMessage(data.game, "Game Over - " + winner.name + " wins!");
             };
 
             updateGame(data.game);

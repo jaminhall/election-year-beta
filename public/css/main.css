@@ -1,7 +1,6 @@
 body {
     font-family: lato, arial;
     font-size: 16px;
-    padding: 40px;
     background: #F5F5F5;
     color: #2f2f2f;
     margin: 0;
@@ -23,42 +22,132 @@ p {
     background: #444;
     box-shadow: 0px 2px 3px rgba(0, 0, 0, .16);
     color: #999;
-    margin: -40px -40px 20px;
     padding: 10px;
     text-align: center;
     font-family: lato, Arial;
     text-transform: uppercase;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
 }
 
-#mainWrapper {
+#map {
     position: absolute;
-    left: 20px;
-    top: 60px;
-    right: 440px;
+    float: left;
+    left: 240px;
+    right: 0px;
+    text-align: center;
+    padding: 40px;
+    background: #b9f0fd;
+}
+
+#profile {
+    width: 200px;
+    border-right: 1px solid #CCC;
+    padding: 20px 20px 20px 0;
+    overflow: hidden;
+    float: left;
+}
+
+#profile p {
+    width: 200px;
+    overflow-wrap: break-word;
+}
+
+#profile img {
+    width: 160px;
+    margin: 0 auto;
+}
+
+#gameInfo {
+    background: #FFF;
+    border-bottom: 1px solid #CCC;
+    margin: -20px -20px 0 -20px;
+    padding: 20px;
+}
+
+#boardWrapper {
+    position: absolute;
+    top: 43px;
+    right: 300px;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
 }
 
 #chat {
-    position: absolute;
-    right: 20px;
-    width: 400px;
-    border: 1px solid #CCC;
-    border-radius: 4px;
-    background: #FFF;
-    bottom: 20px;
-    top: 60px;
+    position: fixed;
+    width: 300px;
+    top: 43px;
+    bottom: 0;
+    right: 0;
+    color: #FFF;
+    background: #5f5f5f;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.left {
+    padding-right: 200px;
 }
 
 #chat h2 {
     padding: 10px;
-    /*background: #444;
-    color: #FFF;*/
+    /*background: #444;*/
     
-    border-radius: 4px 4px 0 0;
+    border-bottom: 1px solid #444;
+    color: #FFF;
+    /*border-radius: 4px 4px 0 0;
     /*box-shadow: 0px 2px 3px rgba(0,0,0,0.16);*/
 }
 
+.right {
+    float: right;
+}
+
+.action-buttons {
+    float: right;
+    margin-top: -40px;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .8);
+    z-index: 999999;
+}
+
+.modal-contents {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 800px;
+    height: 600px;
+    background: #FFF;
+    margin-top: -300px;
+    margin-left: -400px;
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 4px;
+}
+
+.column {
+    width: 200px;
+    float: left;
+    margin-right: 20px;
+}
+
+.clear {
+    clear: both;
+}
+
 #chat em {
-    color: #385C75;
+    color: #DDD;
     font-weight: bold;
     font-size: 12px;
 }
@@ -70,6 +159,8 @@ p {
     right: 10px;
     bottom: 150px;
     overflow-y: auto;
+    color: #f5f5f5;
+    padding: 10px;
 }
 
 #chat div#send-message {
@@ -83,6 +174,7 @@ p {
     margin: 0;
     padding: 0;
     font-size: 13px;
+    color: #FFF;
 }
 
 #chat .message {
