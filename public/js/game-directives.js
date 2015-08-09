@@ -12,6 +12,8 @@
             controller: function ($scope, socket) {
                 $currentPlayerIndex = -1;
                 socket.on("game:updated", function (data) {
+                    //console.log(data);
+                    $scope.drivingRestrictions = data.drivingRestrictions;
                     $scope.currentPlayer.currentGame = data.name;
                     $scope.gameName = data.name;
                     $scope.players = data.players;
@@ -46,7 +48,7 @@
                     $scope.myTurnStarted = $scope.myTurn = $scope.players[$scope.currentPlayerIndex].name == $scope.currentPlayer.name;
                     $scope.currentPlayer.airTravel = $scope.players[$scope.currentPlayerIndex].airTravel;
                     $scope.currentPlayer.roadTravel = $scope.players[$scope.currentPlayerIndex].roadTravel;
-                    $scope.currentPlayer.isTravelling = false;
+                    $scope.currentPlayer.isTraveling = false;
                     if ($scope.myTurnStarted) {
                         $scope.showHand = false;
                         $scope.showPoints = false;
@@ -102,11 +104,20 @@
                     }
                 };
                 $scope.chooseTravelMethod = function (method) {
+                    console.log("change");
                     socket.emit("game:setTravelMethod", {
                         gameName: $scope.gameName,
                         travelMethod: method
                     }, function (success) {
-                        $scope.currentPlayer.isTravelling = true;
+                        console.log(method);
+                        if(method == "fly"){
+                            $scope.currentPlayer.isFlying = true;
+                            $scope.currentPlayer.isDriving = false;
+                        }else if(method == "drive"){
+                            $scope.currentPlayer.isDriving = true;
+                            $scope.currentPlayer.isFlying = false;
+                        }
+                        $scope.currentPlayer.isTraveling = true;
                     });
                 };
 

@@ -111,7 +111,7 @@ module.exports = {
                 name: "The Senator",
                 desc: "Lorem ipsum",
                 reputation: 2,
-                homeRegion: "Region 1",
+                homeRegion: 1,
                 image: "senator.jpg",
                 color: "green",
                 startPos: {
@@ -123,7 +123,7 @@ module.exports = {
                 name: "The Governor",
                 desc: "Lorem ipsum",
                 reputation: 3,
-                homeRegion: "Region 3",
+                homeRegion: 3,
                 image: "governor.jpg",
                 color: "purple",
                 startPos: {
@@ -135,7 +135,7 @@ module.exports = {
                 name: "The Frontrunner",
                 desc: "Lorem ipsum",
                 reputation: 4,
-                homeRegion: "Region 5",
+                homeRegion: 5,
                 image: "frontrunner.jpg",
                 color: "brown",
                 startPos: {
@@ -147,7 +147,7 @@ module.exports = {
                 name: "The Newcomer",
                 desc: "Lorem ipsum",
                 reputation: 1,
-                homeRegion: "Region 7",
+                homeRegion: 7,
                 image: "newcomer.jpg",
                 color: "gray",
                 startPos: {
@@ -159,7 +159,7 @@ module.exports = {
                 name: "The Gaffe Machine",
                 desc: "Lorem ipsum",
                 reputation: 2,
-                homeRegion: "Region 9",
+                homeRegion: 9,
                 image: "gaffemachine.jpg",
                 color: "pink",
                 startPos: {
@@ -171,7 +171,7 @@ module.exports = {
                 name: "The Old Timer",
                 desc: "Lorem ipsum",
                 reputation: 2,
-                homeRegion: "Region 11",
+                homeRegion: 11,
                 image: "oldtimer.jpg",
                 color: "white",
                 startPos: {
@@ -182,65 +182,128 @@ module.exports = {
         ],
         regionCards: [
             {
-                name: "Region 1",
+                name: 1,
                 values: [3, 3, 4, 5, 5]
             },
             {
-                name: "Region 2",
+                name: 2,
                 values: [3, 3, 4, 5, 5]
             },
             {
-                name: "Region 3",
+                name: 3,
                 values: [3, 3, 4, 5, 5]
             },
             {
-                name: "Region 4",
+                name: 4,
                 values: [3, 3, 4, 5, 5]
             },
             {
-                name: "Region 5",
+                name: 5,
                 values: [2, 3, 4, 5, 6]
             },
             {
-                name: "Region 6",
+                name: 6,
                 values: [3, 4, 5, 5, 6]
             },
             {
-                name: "Region 7",
+                name: 7,
                 values: [4, 5, 5, 6]
             },
             {
-                name: "Region 8",
+                name: 8,
                 values: [4, 5, 5, 6]
             },
             {
-                name: "Region 9",
+                name: 9,
                 values: [3, 3, 4, 5, 5]
             },
             {
-                name: "Region 10",
+                name: 10,
                 values: [2, 3, 4, 5, 6]
             },
             {
-                name: "Region 11",
+                name: 11,
                 values: [3, 4, 5, 5, 6]
             },
             {
-                name: "Region 12",
+                name: 12,
                 values: [4, 5, 5, 6]
             },
             {
-                name: "Region 13",
+                name: 13,
                 values: [4, 5, 5, 6]
             },
             {
-                name: "Region 14",
+                name: 14,
                 values: [4, 5, 5, 6]
             },
             {
-                name: "Region 15",
+                name: 15,
                 values: [4, 5, 5, 6]
             },
+
+        ],
+        drivingRestrictions: [
+            {
+                currentRegion: 15,
+                avalibleRegions: [14, 13]
+            },
+            {
+                currentRegion: 14,
+                avalibleRegions: [15, 13, 12, 10]
+            },
+            {
+                currentRegion: 13,
+                avalibleRegions: [15, 14, 12]
+            },
+            {
+                currentRegion: 12,
+                avalibleRegions: [14, 13, 11, 10]
+            },
+            {
+                currentRegion: 11,
+                avalibleRegions: [12, 10, 8]
+            },
+            {
+                currentRegion: 10,
+                avalibleRegions: [14, 12, 11, 9, 8]
+            },
+            {
+                currentRegion: 9,
+                avalibleRegions: [10, 8, 7, 6]
+            },
+            {
+                currentRegion: 8,
+                avalibleRegions: [11, 10, 9, 6, 5]
+            },
+            {
+                currentRegion: 7,
+                avalibleRegions: [9, 6, 3]
+            },
+            {
+                currentRegion: 6,
+                avalibleRegions: [5, 8, 9, 7, 3]
+            },
+            {
+                currentRegion: 5,
+                avalibleRegions: [8, 6, 4]
+            },
+            {
+                currentRegion: 4,
+                avalibleRegions: [5]
+            },
+            {
+                currentRegion: 3,
+                avalibleRegions: [7, 6, 2]
+            },
+            {
+                currentRegion: 2,
+                avalibleRegions: [3, 1]
+            },
+            {
+                currentRegion: 1,
+                avalibleRegions: [2]
+            }
 
         ],
     },
@@ -252,6 +315,7 @@ module.exports = {
             actionCards: createActionDeck(settings.actionCards),
             regionCards: createRegionDecks(settings.regionCards),
             candidateCards: createCandidateDeck(settings.candidateCards),
+            drivingRestrictions: settings.drivingRestrictions,
             defaultAirTravel: 1,
             defaultRoadTravel: 2
         }
@@ -276,6 +340,8 @@ module.exports = {
             game.players[i].color = game.players[i].candidateCard.color;
             game.players[i].currentRegion = game.players[i].candidateCard.homeRegion;
             game.players[i].regionCards = [takeRegionCard(game, game.players[i].candidateCard.homeRegion)];
+            //game.players[i].raodTravel = 0;
+            //game.players[i].airTravel = 0;
         }
     },
     removePlayer: function (game, player) {
